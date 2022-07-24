@@ -1,9 +1,14 @@
 import type { NextPage } from 'next'
 import { useSession } from 'next-auth/react'
 import Head from 'next/head'
+import { useState } from 'react'
+
+import Button from 'components/ui/common/button'
+import TextInput from 'components/ui/common/text-input'
 
 const Home: NextPage = () => {
   const { data, status } = useSession()
+  const [input, setInput] = useState('')
   console.log(data)
   console.log(status)
   return (
@@ -14,7 +19,23 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto">Hello!</main>
+      <main className="container mx-auto p-2">
+        <div className="mt-12 flex flex-col">
+          <h1 className="font-display text-4xl uppercase">Hi there!</h1>
+          <div className="mt-3 flex justify-start gap-3">
+            <Button variant="secondary">Hello!</Button>
+            <Button>Hello!</Button>
+          </div>
+          <TextInput
+            value={input}
+            onChange={(evt) => setInput(evt.target.value)}
+            placeholder="Thomas"
+            className="mt-3 w-full"
+            description="First Name"
+            errorMessage="Invalid first name."
+          />
+        </div>
+      </main>
     </>
   )
 }
