@@ -1,5 +1,5 @@
 import { TRPCError } from '@trpc/server'
-import { MiddlewareFunction } from '@trpc/server/dist/declarations/src/internals/middlewares'
+import type { MiddlewareFunction } from '@trpc/server/dist/declarations/src/internals/middlewares'
 
 import { Context } from 'server/context'
 

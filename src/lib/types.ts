@@ -1,6 +1,6 @@
 import type { z } from 'zod'
 
-import type { recipeDetailsSchema } from './schemas'
+import type { recipeDetailsSchema, recipeSchema } from './schemas'
 
 export enum ImperialVolume {
   Teaspoons = 'TSP',
@@ -19,10 +19,12 @@ export enum ImperialWeight {
 
 export const unit = { ...ImperialVolume, ...ImperialWeight }
 
-export type RecipeElement = (
+export type RecipeData = z.infer<typeof recipeSchema>
+
+export type RecipeElement =
   | { type: 'text'; content: string }
-  | { type: 'image'; url: string }
+  | { type: 'image'; url: string; caption?: string }
   | { type: 'section'; children: RecipeElement[] }
-) & { note?: string }
+  | { type: 'note'; content: string }
 
 export type RecipeDetails = z.infer<typeof recipeDetailsSchema>

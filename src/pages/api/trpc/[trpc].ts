@@ -1,11 +1,9 @@
-import * as trpc from '@trpc/server'
 import * as trpcNext from '@trpc/server/adapters/next'
 
-import { createContext } from 'server/context'
+import { createContext, createRouter } from 'server/context'
+import recipeRouter from 'server/routers/recipe'
 
-export const appRouter = trpc.router().query('hello', {
-  resolve: () => 'world!',
-})
+export const appRouter = createRouter().merge('recipe.', recipeRouter)
 
 export type AppRouter = typeof appRouter
 
