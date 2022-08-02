@@ -1,6 +1,5 @@
 import type { ReactNode } from 'react'
-
-import HeightSlider from 'components/utils/slide-open'
+import { AnimatePresence, motion } from 'framer-motion'
 
 export const ErrorMessage = ({
   children,
@@ -9,15 +8,16 @@ export const ErrorMessage = ({
   children: ReactNode
   noMargin?: boolean
 }) => (
-  <HeightSlider saveChildren>
+  <AnimatePresence initial={false}>
     {children && (
-      <div
-        className={`overflow-hidden text-sm font-light text-red-700 dark:text-red-400 ${
-          noMargin ? '' : 'pt-1'
-        }`}
+      <motion.div
+        className="overflow-hidden text-sm font-light text-red-700 dark:text-red-400"
+        initial={{ height: 0 }}
+        animate={{ height: 'auto' }}
+        exit={{ height: 0 }}
       >
-        {children}
-      </div>
+        <div className={noMargin ? '' : 'pt-1'}>{children}</div>
+      </motion.div>
     )}
-  </HeightSlider>
+  </AnimatePresence>
 )

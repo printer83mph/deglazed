@@ -5,11 +5,11 @@ import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
+import { AnimatePresence, motion } from 'framer-motion'
 
 import { registerWithError } from 'utils/forms'
 import Button from 'components/ui/common/button'
 import TextInput from 'components/ui/common/text-input'
-import HeightSlider from 'components/utils/slide-open'
 
 const formSchema = z.object({
   firstName: z.string().min(1, 'First name required'),
@@ -52,13 +52,20 @@ const Home: NextPage = () => {
           </div>
           <div className="mt-3">
             <Button onClick={() => setShow((v) => !v)}>Show/Hide</Button>
-            <HeightSlider hidden={!show}>
-              <div className="pt-3">
-                <div className="rounded-lg bg-clay-100 p-5 dark:bg-clay-800">
-                  Hello!
-                </div>
-              </div>
-            </HeightSlider>
+            <AnimatePresence initial={false}>
+              {show && (
+                <motion.div
+                  className="overflow-hidden"
+                  initial={{ height: 0 }}
+                  animate={{ height: 'auto' }}
+                  exit={{ height: 0 }}
+                >
+                  <div className="rounded-lg bg-clay-100 p-5 dark:bg-clay-800">
+                    Hello!
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </div>
           <form
             className="flex flex-col"

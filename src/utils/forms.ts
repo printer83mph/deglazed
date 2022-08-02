@@ -2,6 +2,7 @@ import {
   FieldErrors,
   FieldValues,
   Path,
+  RegisterOptions,
   UseFormRegister,
 } from 'react-hook-form'
 
@@ -10,7 +11,7 @@ export const registerWithError =
     register: UseFormRegister<T>,
     errors: FieldErrors<T>
   ) =>
-  (name: Path<T>) => ({
-    ...register(name),
+  <P extends Path<T>>(name: P, opts?: RegisterOptions<T, P>) => ({
+    ...register(name, opts),
     errorMessage: errors[name] && `${errors[name]?.message}.`,
   })

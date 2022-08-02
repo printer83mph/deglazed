@@ -9,7 +9,9 @@ import getUser from 'server/middlewares/get-user'
 
 const publicRecipeRouter = createRouter().query('list', {
   input: z.object({ season: z.nativeEnum(Season) }).optional(),
-  resolve() {},
+  async resolve({ ctx: { prisma } }) {
+    return prisma.recipe.findMany()
+  },
 })
 
 const privateRecipeRouter = createRouter()
@@ -67,6 +69,6 @@ const privateRecipeRouter = createRouter()
   })
 
 const recipeRouter = createRouter()
-  .merge(publicRecipeRouter)
-  .merge('private.', privateRecipeRouter)
+  .merge('public.', publicRecipeRouter)
+  .merge('', privateRecipeRouter)
 export default recipeRouter

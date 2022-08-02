@@ -1,10 +1,12 @@
-import 'styles/globals.css'
 import { withTRPC } from '@trpc/next'
 import { SessionProvider } from 'next-auth/react'
+import superjson from 'superjson'
 
 import { AppRouter } from './api/trpc/[trpc]'
 
 import { AppPropsWithLayout } from 'server/lib/types'
+
+import 'styles/globals.css'
 
 const MyApp = ({
   Component,
@@ -23,7 +25,10 @@ export default withTRPC<AppRouter>({
     const url = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}/api/trpc`
       : 'http://localhost:3000/api/trpc'
-    return { url }
+    return {
+      url,
+      transformer: superjson,
+    }
   },
   ssr: true,
 })(MyApp)

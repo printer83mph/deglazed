@@ -1,30 +1,33 @@
 import type { z } from 'zod'
 
-import type { recipeDetailsSchema, recipeSchema } from './schemas'
+import type {
+  recipeDetailsSchema,
+  recipeElementSchema,
+  recipeIngredientSchema,
+  recipeSchema,
+} from './schemas'
 
 export enum ImperialVolume {
-  Teaspoons = 'TSP',
-  Tablespoons = 'TBSP',
-  FluidOunces = 'FLOZ',
-  Cups = 'CUP',
-  Pints = 'PINT',
-  Quarts = 'QUART',
-  Gallons = 'GAL',
+  TSP,
+  TBSP,
+  FLOZ,
+  CUP,
+  PINT,
+  QUART,
+  GAL,
 }
 
 export enum ImperialWeight {
-  Ounce = 'OZ',
-  Pound = 'LB',
+  OZ,
+  LB,
 }
 
 export const unit = { ...ImperialVolume, ...ImperialWeight }
 
+export type RecipeIngredient = z.infer<typeof recipeIngredientSchema>
+
 export type RecipeData = z.infer<typeof recipeSchema>
 
-export type RecipeElement =
-  | { type: 'text'; content: string }
-  | { type: 'image'; url: string; caption?: string }
-  | { type: 'section'; children: RecipeElement[] }
-  | { type: 'note'; content: string }
+export type RecipeElement = z.infer<typeof recipeElementSchema>
 
 export type RecipeDetails = z.infer<typeof recipeDetailsSchema>

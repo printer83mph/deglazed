@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
 export const DefaultLayout = ({ children }: { children: ReactNode }) => (
-  <main className="container mx-auto">{children}</main>
+  <main className="container mx-auto px-2 py-12">{children}</main>
 )
 
 const DefaultLayoutTitle = ({ children }: { children: React.ReactNode }) => (

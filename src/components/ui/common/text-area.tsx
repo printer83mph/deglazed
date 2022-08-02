@@ -1,29 +1,22 @@
 import React from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 
-import Description from './utils/description'
 import { textInputStyle } from './utils/styles'
-import { ErrorMessage } from './utils/error-message'
+import InputWrapper, { CustomInputProps } from './utils/input-wrapper'
 
 export interface TextAreaProps
-  extends React.ComponentPropsWithoutRef<typeof TextareaAutosize> {
-  description?: string
-  errorMessage?: any
-}
+  extends React.ComponentPropsWithoutRef<typeof TextareaAutosize>,
+    CustomInputProps {}
 
 const TextArea = React.forwardRef<HTMLTextAreaElement, TextAreaProps>(
-  ({ className = '', description, errorMessage, ...props }, ref) => (
-    // We are using the funny autosizer
-    // eslint-disable-next-line jsx-a11y/label-has-for
-    <label className={className}>
-      {description && <Description>{description}</Description>}
+  ({ className, description, errorMessage, ...props }, ref) => (
+    <InputWrapper {...{ className, description, errorMessage }}>
       <TextareaAutosize
         {...props}
         className={`${textInputStyle(errorMessage)} resize-none`}
         ref={ref}
       />
-      <ErrorMessage noMargin>{errorMessage}</ErrorMessage>
-    </label>
+    </InputWrapper>
   )
 )
 
