@@ -7,12 +7,25 @@ import requireAuth from 'server/middlewares/require-auth'
 import { recipeSchema } from 'lib/schemas'
 import getUser from 'server/middlewares/get-user'
 
-const publicRecipeRouter = createRouter().query('list', {
-  input: z.object({ season: z.nativeEnum(Season) }).optional(),
-  async resolve({ ctx: { prisma } }) {
-    return prisma.recipe.findMany()
-  },
-})
+const publicRecipeRouter = createRouter()
+  .query('list', {
+    input: z.object({ season: z.nativeEnum(Season) }).optional(),
+    async resolve({ ctx: { prisma } }) {
+      return prisma.recipe.findMany()
+    },
+  })
+  .query('details', {
+    input: z.object({ recipeId: z.string() }),
+    async resolve({ ctx: { prisma }, input: { recipeId } }) {
+      const recipeDetails = await prisma.recipe.findUnique({
+        where: { id: recipeId },
+      })
+      if (recipeDetails === null) {
+        throw new TRPCError({ code: 'NOT_FOUND', message: 'Recipe not found' })
+      }
+      return recipeDetails
+    },
+  })
 
 const privateRecipeRouter = createRouter()
   .middleware(requireAuth())

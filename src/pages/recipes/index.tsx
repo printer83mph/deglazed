@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import { DefaultLayout } from 'components/layouts/default-layout'
 import { NextPageWithLayout } from 'server/lib/types'
 import Title from 'components/common/title'
@@ -10,7 +12,11 @@ const RecipesPage: NextPageWithLayout = () => {
       <Title>Hello!</Title>
       <ul>
         {recipes &&
-          recipes.map(({ displayName, id }) => <li key={id}>{displayName}</li>)}
+          recipes.map(({ displayName, id }) => (
+            <li key={id}>
+              <Link href={`/recipes/${id}`}>{displayName}</Link>
+            </li>
+          ))}
       </ul>
     </>
   )
