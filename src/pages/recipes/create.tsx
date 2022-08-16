@@ -21,7 +21,7 @@ import { seasons } from 'lib/constants/decoration'
 const CreateRecipePage: NextPageWithLayout = () => {
   const router = useRouter()
 
-  const recipeMutation = trpc.useMutation('recipe.new')
+  const recipeMutation = trpc.useMutation('private.recipes.new')
 
   const {
     register: reg,

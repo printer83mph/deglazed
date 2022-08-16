@@ -7,7 +7,7 @@ import requireAuth from 'server/middlewares/require-auth'
 import { recipeSchema } from 'lib/schemas'
 import getUser from 'server/middlewares/get-user'
 
-const publicRecipeRouter = createRouter()
+export const recipesRouter = createRouter()
   .query('list', {
     input: z.object({ season: z.nativeEnum(Season) }).optional(),
     async resolve({ ctx: { prisma } }) {
@@ -27,9 +27,10 @@ const publicRecipeRouter = createRouter()
     },
   })
 
-const privateRecipeRouter = createRouter()
+export const privateRecipesRouter = createRouter()
   .middleware(requireAuth())
   .middleware(getUser())
+
   // uploading a new recipe
   .mutation('new', {
     input: recipeSchema,
@@ -40,6 +41,7 @@ const privateRecipeRouter = createRouter()
       return recipe
     },
   })
+
   // edit an existing recipe
   .mutation('edit', {
     input: z.object({
@@ -63,6 +65,7 @@ const privateRecipeRouter = createRouter()
       })
     },
   })
+
   // remove an existing recipe
   .mutation('remove', {
     input: z.object({ recipeId: z.string() }),
@@ -80,8 +83,3 @@ const privateRecipeRouter = createRouter()
       return prisma.recipe.delete({ where: { id: input.recipeId } })
     },
   })
-
-const recipeRouter = createRouter()
-  .merge('public.', publicRecipeRouter)
-  .merge('', privateRecipeRouter)
-export default recipeRouter

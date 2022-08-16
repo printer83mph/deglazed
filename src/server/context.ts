@@ -4,9 +4,10 @@ import { getToken } from 'next-auth/jwt'
 
 import { prisma } from 'server/lib/prisma'
 
-export async function createContext(ctx: trpcNext.CreateNextContextOptions) {
-  const { req, res } = ctx
-  const token = await getToken({ req })
+export async function createContext(opts?: trpcNext.CreateNextContextOptions) {
+  const req = opts?.req
+  const res = opts?.res
+  const token = req && res && (await getToken({ req }))
   return {
     req,
     res,

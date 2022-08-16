@@ -1,5 +1,3 @@
-import type { NextPage } from 'next'
-import { useSession } from 'next-auth/react'
 import Head from 'next/head'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -10,15 +8,15 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { registerWithError } from 'utils/forms'
 import Button from 'components/ui/common/button'
 import TextInput from 'components/ui/common/text-input'
+import { DefaultLayout } from 'components/layouts/default-layout'
+import { NextPageWithLayout } from 'server/lib/types'
 
 const formSchema = z.object({
   firstName: z.string().min(1, 'First name required'),
   lastName: z.string().min(1, 'Last name required'),
 })
 
-const Home: NextPage = () => {
-  const { data, status } = useSession()
-
+const Home: NextPageWithLayout = () => {
   const [show, setShow] = useState(false)
 
   const {
@@ -38,61 +36,61 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto p-2">
-        <div className="mt-12 flex flex-col">
-          <h1 className="font-display text-4xl uppercase">Hi there!</h1>
-          <div className="mt-3 flex justify-start gap-3">
-            <Button disabled={!show}>Hello!</Button>
-            <Button variant="secondary" disabled={!show}>
-              Hello!
-            </Button>
-            <Button variant="ring" disabled={!show}>
-              Hello!
-            </Button>
-          </div>
-          <div className="mt-3">
-            <Button onClick={() => setShow((v) => !v)}>Show/Hide</Button>
-            <AnimatePresence initial={false}>
-              {show && (
-                <motion.div
-                  className="overflow-hidden"
-                  initial={{ height: 0 }}
-                  animate={{ height: 'auto' }}
-                  exit={{ height: 0 }}
-                >
-                  <div className="rounded-lg bg-clay-100 p-5 dark:bg-clay-800">
-                    Hello!
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-          <form
-            className="flex flex-col"
-            onSubmit={handleSubmit((datums) => console.log(datums))}
-          >
-            <div className="mt-6 grid gap-3 md:grid-cols-2">
-              <TextInput
-                {...register('firstName')}
-                placeholder="Thomas"
-                className=""
-                description="First Name"
-              />
-              <TextInput
-                {...register('lastName')}
-                placeholder="Funnyson"
-                className=""
-                description="Last Name"
-              />
-            </div>
-            <Button isSubmit className="mt-6" size="lg">
-              Submit
-            </Button>
-          </form>
+      <div className="mt-12 flex flex-col px-2">
+        <DefaultLayout.Title>Hi there!</DefaultLayout.Title>
+        <div className="mt-3 flex justify-start gap-3">
+          <Button disabled={!show}>Hello!</Button>
+          <Button variant="secondary" disabled={!show}>
+            Hello!
+          </Button>
+          <Button variant="ring" disabled={!show}>
+            Hello!
+          </Button>
         </div>
-      </main>
+        <div className="mt-3">
+          <Button onClick={() => setShow((v) => !v)}>Show/Hide</Button>
+          <AnimatePresence initial={false}>
+            {show && (
+              <motion.div
+                className="overflow-hidden"
+                initial={{ height: 0 }}
+                animate={{ height: 'auto' }}
+                exit={{ height: 0 }}
+              >
+                <div className="rounded-lg bg-clay-100 p-5 dark:bg-clay-800">
+                  Hello!
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+        <form
+          className="flex flex-col"
+          onSubmit={handleSubmit((datums) => console.log(datums))}
+        >
+          <div className="mt-6 grid gap-3 md:grid-cols-2">
+            <TextInput
+              {...register('firstName')}
+              placeholder="Thomas"
+              className=""
+              description="First Name"
+            />
+            <TextInput
+              {...register('lastName')}
+              placeholder="Funnyson"
+              className=""
+              description="Last Name"
+            />
+          </div>
+          <Button isSubmit className="mt-6" size="lg">
+            Submit
+          </Button>
+        </form>
+      </div>
     </>
   )
 }
+
+Home.getLayout = (page) => <DefaultLayout>{page}</DefaultLayout>
 
 export default Home

@@ -5,7 +5,7 @@ export const DefaultLayout = ({ children }: { children: ReactNode }) => (
 )
 
 const DefaultLayoutTitle = ({ children }: { children: React.ReactNode }) => (
-  <h1 className="text-4xl font-bold tracking-tight">{children}</h1>
+  <h1 className="font-display text-4xl font-bold tracking-tight">{children}</h1>
 )
 
 DefaultLayout.Title = DefaultLayoutTitle
