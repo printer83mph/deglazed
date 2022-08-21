@@ -7,22 +7,27 @@ import type {
   recipeSchema,
 } from './schemas'
 
+export enum BasicUnit {
+  PIECE = 'PIECE',
+  DOZEN = 'DOZEN',
+}
+
 export enum ImperialVolume {
-  TSP,
-  TBSP,
-  FLOZ,
-  CUP,
-  PINT,
-  QUART,
-  GAL,
+  TSP = 'TSP',
+  TBSP = 'TBSP',
+  FLOZ = 'FLOZ',
+  CUP = 'CUP',
+  PINT = 'PINT',
+  QUART = 'QUART',
+  GAL = 'GAL',
 }
 
 export enum ImperialWeight {
-  OZ,
-  LB,
+  OZ = 'OZ',
+  LB = 'LB',
 }
 
-export const unit = { ...ImperialVolume, ...ImperialWeight }
+export const unit = { ...BasicUnit, ...ImperialVolume, ...ImperialWeight }
 
 export type RecipeIngredient = z.infer<typeof recipeIngredientSchema>
 

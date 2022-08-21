@@ -14,7 +14,7 @@ import { RecipeData } from 'lib/types'
 import TextInput from 'components/ui/common/text-input'
 import Button from 'components/ui/common/button'
 import SelectInput from 'components/ui/common/hookform/select-input'
-import Subtitle from 'components/common/subtitle'
+import Header from 'components/common/header'
 import IngredientsInput from 'components/ui/recipes/ingredients-input'
 import { seasons } from 'lib/constants/decoration'
 
@@ -73,7 +73,7 @@ const CreateRecipePage: NextPageWithLayout = () => {
             })}
           />
         </div>
-        <Subtitle>Ingredients</Subtitle>
+        <Header>Ingredients</Header>
         <IngredientsInput control={control} />
         <Button isSubmit size="lg" className="ml-auto">
           Create New Recipe

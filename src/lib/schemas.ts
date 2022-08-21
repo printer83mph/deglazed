@@ -4,21 +4,19 @@ import { z } from 'zod'
 import { unit } from './types'
 
 export const recipeIngredientSchema = z.object({
-  isGroup: z.literal(false),
   count: z.number().optional(),
-  unit: z.union([z.string().min(1), z.nativeEnum(unit)]).optional(),
+  unit: z.union([z.string().min(1), z.nativeEnum(unit)]),
   ingredient: z.string().min(1),
   scale: z.boolean(),
 })
 export const defaultRecipeIngredient: z.infer<typeof recipeIngredientSchema> = {
-  isGroup: false,
   ingredient: '',
+  unit: '',
   scale: false,
 }
 
 export const recipeElementSchema = z.object({
-  isSection: z.literal(false),
-  element: z.discriminatedUnion('type', [
+  content: z.discriminatedUnion('type', [
     z.object({ type: z.literal('text'), content: z.string().min(1) }),
     z.object({
       type: z.literal('image'),
@@ -32,7 +30,7 @@ export const recipeElementSchema = z.object({
 export const recipeDetailsSchema = z.object({
   ingredients: z.array(
     z.discriminatedUnion('isGroup', [
-      recipeIngredientSchema,
+      recipeIngredientSchema.merge(z.object({ isGroup: z.literal(false) })),
       z.object({
         isGroup: z.literal(true),
         groupName: z.string().min(1).optional(),
@@ -42,7 +40,7 @@ export const recipeDetailsSchema = z.object({
   ),
   steps: z.array(
     z.discriminatedUnion('isSection', [
-      recipeElementSchema,
+      recipeElementSchema.merge(z.object({ isSection: z.literal(false) })),
       z.object({
         isSection: z.literal(true),
         children: z.array(recipeElementSchema),
