@@ -13,5 +13,5 @@ export const registerWithError =
   ) =>
   <P extends Path<T>>(name: P, opts?: RegisterOptions<T, P>) => ({
     ...register(name, opts),
-    errorMessage: errors[name] && `${errors[name]?.message}.`,
+    errorMessage: errors[name]?.message,
   })

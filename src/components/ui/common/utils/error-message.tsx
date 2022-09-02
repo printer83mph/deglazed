@@ -16,7 +16,7 @@ export const ErrorMessage = ({
         animate={{ height: 'auto' }}
         exit={{ height: 0 }}
       >
-        <div className={noMargin ? '' : 'pt-1'}>{children}</div>
+        <div className={noMargin ? '' : 'pt-1'}>{children}.</div>
       </motion.div>
     )}
   </AnimatePresence>

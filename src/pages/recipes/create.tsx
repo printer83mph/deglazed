@@ -15,7 +15,7 @@ import TextInput from 'components/ui/common/text-input'
 import Button from 'components/ui/common/button'
 import SelectInput from 'components/ui/common/hookform/select-input'
 import Header from 'components/common/header'
-import IngredientsInput from 'components/ui/recipes/ingredients-input'
+import IngredientsFormField from 'components/ui/recipes/ingredients-form-field'
 import { seasons } from 'lib/constants/decoration'
 
 const CreateRecipePage: NextPageWithLayout = () => {
@@ -37,7 +37,7 @@ const CreateRecipePage: NextPageWithLayout = () => {
   const onSubmit = useCallback<SubmitHandler<RecipeData>>(
     async (formData) => {
       const recipe = await recipeMutation.mutateAsync(formData)
-      router.push({ pathname: `/recipes/${recipe.id}` })
+      await router.push({ pathname: `/recipes/${recipe.id}` })
     },
     [recipeMutation, router]
   )
@@ -74,7 +74,7 @@ const CreateRecipePage: NextPageWithLayout = () => {
           />
         </div>
         <Header>Ingredients</Header>
-        <IngredientsInput control={control} />
+        <IngredientsFormField control={control} />
         <Button isSubmit size="lg" className="ml-auto">
           Create New Recipe
         </Button>

@@ -26,7 +26,7 @@ const SelectInput = <
   } = useController({ name, control })
   return (
     <BaseSelectInput
-      errorMessage={error?.message && `${error.message}.`}
+      errorMessage={error?.message}
       {...props}
       {...field}
       buttonRef={ref}

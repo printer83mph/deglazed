@@ -5,7 +5,7 @@ import { unit } from './types'
 
 export const recipeIngredientSchema = z.object({
   count: z.number().optional(),
-  unit: z.union([z.string().min(1), z.nativeEnum(unit)]),
+  unit: z.union([z.string().min(1, 'Required'), z.nativeEnum(unit)]),
   ingredient: z.string().min(1),
   scale: z.boolean(),
 })
